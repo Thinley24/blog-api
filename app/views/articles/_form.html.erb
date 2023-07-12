@@ -1,0 +1,35 @@
+<%# 
+Since the code will be the same as new.html.erd, we're going to factor it out into a 
+shared view called a "partial". 
+
+Here, all occurrences of @article have been replaced with article because, they do not 
+depend on specific instance variables set by a controller action. Instead, we will pass 
+the article to the partial as a local variable.
+%>
+
+<%= form_with model: article do |form| %>
+    <div>
+        <%= form.label :title %><br>
+        <%= form.text_field :title %>
+        <% article.errors.full_messages_for(:title).each do |message| %>
+            <b>ERROR: </b><div><%= message %></div><br>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.label :body %><br>
+        <%= form.text_area :body %>
+        <% article.errors.full_messages_for(:body).each do |message| %>
+            <b>ERROR: </b><div><%= message %></div><br>
+        <% end %>
+    </div>
+
+    <div>
+        <%= form.label :status %><br>
+        <%= form.select :status, ['public', 'private', 'archived'], selected: 'public' %>
+    </div>
+
+    <div>
+        <%= form.submit %>
+    </div>
+<% end %>
